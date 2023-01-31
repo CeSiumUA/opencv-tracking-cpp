@@ -29,7 +29,7 @@ int main(){
 
         double start_time = (double)getTickCount();
 
-        putText(frame, "Original FPS: " + static_cast<std::ostringstream &>(std::ostringstream() << std::dec << int(original_fps)).str(), Point(20, 50), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
+        putText(frame, "Original FPS: " + to_string(int(original_fps)), Point(20, 50), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
 
         putText(frame, "Alg: MIL", Point(20, 20), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
 
@@ -55,7 +55,8 @@ int main(){
         double ticks_diff = (((double)getTickCount() - start_time)/getTickFrequency()) * 1000;
 
         if(period > ticks_diff){
-            delay = period - ticks_diff;
+            int diff = period - ticks_diff;
+            delay = diff == 0 ? 1 : diff;
         }
 
         int k = waitKey(delay);
