@@ -27,6 +27,7 @@ int main(int argc, char** argv){
         video = new VideoCapture(cam_index);
     }
     else{
+        cout << "Wrong argument provided" << endl;
         show_help();
         return 0;
     }
