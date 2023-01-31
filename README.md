@@ -30,7 +30,9 @@ Install:
 sudo make install
 ```
 
-Source: https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html
+Source: [OpenCV Docs](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html)
+For MacOS: [OpenCV Install to MacOS](https://docs.opencv.org/4.x/d0/db2/tutorial_macos_install.html)
+For Windows: [OpenCV Install for Windows](https://docs.opencv.org/4.x/d3/d52/tutorial_windows_install.html)
 
 #### Building tracker
 
