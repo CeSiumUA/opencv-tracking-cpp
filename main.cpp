@@ -86,6 +86,7 @@ int main(int argc, char** argv){
             break;
         }
         else if(k == 115){
+            putText(frame, "Press enter when selected a target", Point(20, 110), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 255, 0), 2);
             roi = selectROI("Tracking", frame);
             tracker -> init(frame, roi);
         }
