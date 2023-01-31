@@ -43,10 +43,13 @@ make
 ```
 
 Run:
-```
-#From file:
-./opencv_tracking_cpp -f /home/fedir/projects/opencv-tracking/1.mp4
 
-#From cam:
+From file:
+```
+./opencv_tracking_cpp -f /home/fedir/projects/opencv-tracking/1.mp4
+```
+
+From cam:
+```
 ./opencv_tracking_cpp -c 0
 ```
