@@ -5,12 +5,12 @@ using namespace std;
 
 char* get_cmd_option(char ** begin, char ** end, const std::string & option);
 bool cmd_option_exists(char** begin, char** end, const std::string& option);
+void show_help();
 
 int main(int argc, char** argv){
 
     if(cmd_option_exists(argv, argv + argc, "-h")){
-        cout << "To capture from file: -f <file name>" << endl;
-        cout << "To capture from cam: -c <cam index (usually 0)>" << endl;
+        show_help();
         return 0;
     }
 
@@ -25,6 +25,10 @@ int main(int argc, char** argv){
     }else if(cmd_option_exists(argv, argv + argc, "-c")){
         int cam_index = atoi(get_cmd_option(argv, argv + argc, "-c"));
         video = new VideoCapture(cam_index);
+    }
+    else{
+        show_help();
+        return 0;
     }
 
     if(!video -> isOpened()){
@@ -112,4 +116,9 @@ char* get_cmd_option(char ** begin, char ** end, const std::string & option)
 bool cmd_option_exists(char** begin, char** end, const std::string& option)
 {
     return std::find(begin, end, option) != end;
+}
+
+void show_help(){
+        cout << "To capture from file: -f <file name>" << endl;
+        cout << "To capture from cam: -c <cam index (usually 0)>" << endl;
 }
