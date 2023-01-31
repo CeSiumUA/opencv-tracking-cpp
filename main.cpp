@@ -3,29 +3,46 @@
 using namespace cv;
 using namespace std;
 
-int main(){
+char* get_cmd_option(char ** begin, char ** end, const std::string & option);
+bool cmd_option_exists(char** begin, char** end, const std::string& option);
+
+int main(int argc, char** argv){
+
+    if(cmd_option_exists(argv, argv + argc, "-h")){
+        cout << "To capture from file: -f <file name>" << endl;
+        cout << "To capture from cam: -c <cam index (usually 0)>" << endl;
+        return 0;
+    }
 
     Ptr<Tracker> tracker;
     tracker = TrackerMIL::create();
 
-    VideoCapture video("/home/fedir/projects/opencv-tracking/2.mp4");
+    Ptr<VideoCapture> video;
 
-    if(!video.isOpened()){
-        cout << "File not found!" << endl;
+    if(cmd_option_exists(argv, argv + argc, "-f")){
+        char* file_name = get_cmd_option(argv, argv + argc, "-f");
+        video = new VideoCapture(file_name);
+    }else if(cmd_option_exists(argv, argv + argc, "-c")){
+        int cam_index = atoi(get_cmd_option(argv, argv + argc, "-c"));
+        video = new VideoCapture(cam_index);
+    }
+
+    if(!video -> isOpened()){
+        cout << "File or cam not found!" << endl;
         return 1;
     }
 
-    double original_fps = video.get(CAP_PROP_FPS);
+    double original_fps = video -> get(CAP_PROP_FPS);
     double period = 1000 / original_fps;
 
     Mat frame;
-    bool ok = video.read(frame);
+    bool ok = video -> read(frame);
 
     Rect roi;
 
     cout << "Press an ESC key to exit" << endl;
 
-    while(video.read(frame)){
+    while(video -> read(frame)){
 
         double start_time = (double)getTickCount();
 
@@ -74,7 +91,24 @@ int main(){
         }
     }
 
+    video.release();
+
     destroyAllWindows();
 
     return 0;
+}
+
+char* get_cmd_option(char ** begin, char ** end, const std::string & option)
+{
+    char ** itr = std::find(begin, end, option);
+    if (itr != end && ++itr != end)
+    {
+        return *itr;
+    }
+    return 0;
+}
+
+bool cmd_option_exists(char** begin, char** end, const std::string& option)
+{
+    return std::find(begin, end, option) != end;
 }
